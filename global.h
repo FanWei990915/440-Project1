@@ -64,40 +64,41 @@ void printMaze(int** maze, int dim){
 
 /* a DFS algorithm that takes a maze and two locations within it, and determines whether one is 
    reachable from the other.*/
-int** rreachable(int** maze, int Sx, int Sy, int Gx, int Gy, int flag){
+void rreachable(int** maze, int Sx, int Sy, int Gx, int Gy, int flag){
 	if(Sx == Gx && Sy == Gy){
 		flag = 1;
 		maze[Gx][Gy] = 3;
-		return maze;
+		printf("REACHABLE\n");
+		return;
 	}
-	if(maze[Sx][Sy + 1] == 0 && flag == 0){
+	if(maze[Sx][Sy + 1] == 0 && maze[Gx][Gy] != 3){
 		maze[Sx][Sy + 1] = 2;
-		return rreachable(maze, Sx, Sy + 1, Gx, Gy, flag);
+		rreachable(maze, Sx, Sy + 1, Gx, Gy, flag);
 	}
-	if(maze[Sx + 1][Sy] == 0 && flag == 0){
+	if(maze[Sx + 1][Sy] == 0 && maze[Gx][Gy] != 3){
 		maze[Sx + 1][Sy] = 2;
 		rreachable(maze, Sx + 1, Sy, Gx, Gy, flag);
 	}
-	if(maze[Sx][Sy - 1] == 0 && flag == 0){
+	if(maze[Sx][Sy - 1] == 0 && maze[Gx][Gy] != 3){
 		maze[Sx][Sy - 1] = 2;
 		rreachable(maze, Sx, Sy - 1, Gx, Gy, flag);
 	}
-	if(maze[Sx - 1][Sy] == 0 && flag == 0){
+	if(maze[Sx - 1][Sy] == 0 && maze[Gx][Gy] != 3){
 		rreachable(maze, Sx - 1, Sy, Gx, Gy, flag);
 		maze[Sx - 1][Sy] = 2;
 	}
-
-	return maze;
+	return;
 
 
 }
-int** reachable(int** maze, int dim, int Sx, int Sy, int Gx, int Gy){
+void reachable(int** maze, int dim, int Sx, int Sy, int Gx, int Gy){
 	int **mazeCopy = initial(dim + 2);
 	for(int i = 0; i < dim + 2; i++){
 		for(int j = 0; j < dim + 2; j++) mazeCopy[i][j] = maze[i][j];
 	}
 	mazeCopy[Sx][Sy] = 3;
-	return rreachable(mazeCopy, Sx, Sy, Gx, Gy, 0);
+	rreachable(mazeCopy, Sx, Sy, Gx, Gy, 0);
+	printMaze(mazeCopy, 20);
 }
 #endif
 
