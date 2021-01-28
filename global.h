@@ -49,6 +49,7 @@ int** mazeGenerator(int n, float p){
 			else mazeMap[randomnum / n + 1][randomnum % n] = 1;
 		}
 	}
+	free(a);
 	return mazeMap;
 }
 
@@ -84,8 +85,8 @@ void rreachable(int** maze, int Sx, int Sy, int Gx, int Gy, int flag){
 		rreachable(maze, Sx, Sy - 1, Gx, Gy, flag);
 	}
 	if(maze[Sx - 1][Sy] == 0 && maze[Gx][Gy] != 3){
-		rreachable(maze, Sx - 1, Sy, Gx, Gy, flag);
 		maze[Sx - 1][Sy] = 2;
+		rreachable(maze, Sx - 1, Sy, Gx, Gy, flag);
 	}
 	return;
 
@@ -98,9 +99,11 @@ void reachable(int** maze, int dim, int Sx, int Sy, int Gx, int Gy){
 	}
 	mazeCopy[Sx][Sy] = 3;
 	rreachable(mazeCopy, Sx, Sy, Gx, Gy, 0);
-	printMaze(mazeCopy, 20);
 }
+
 #endif
+
+
 
 
 
