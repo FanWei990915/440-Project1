@@ -14,6 +14,8 @@ int** initial(int n){
 	}
 	return temp;	
 }
+
+
 /*This function will generate a maze with a given dimension n and obstacle density p. 
 "1" will represent the cell in the maze is occupied and "0" will represent the cell is empty.
 To make it easier to distinguish wheather it is boundary of the maze, we will add a circle of "1" to the maze.
@@ -50,10 +52,64 @@ int** mazeGenerator(int n, float p){
 	return mazeMap;
 }
 
+
+//print a maze
 void printMaze(int** maze, int dim){
 	for(int i = 0; i < dim + 2; i++){
 		for(int j = 0; j < dim + 2; j++) printf("%d ", maze[i][j]);
 		printf("\n");
 	}
 }
+
+
+/* a DFS algorithm that takes a maze and two locations within it, and determines whether one is 
+   reachable from the other.*/
+int** rreachable(int** maze, int Sx, int Sy, int Gx, int Gy, int flag){
+	if(Sx == Gx && Sy == Gy){
+		flag = 1;
+		maze[Gx][Gy] = 3;
+		return maze;
+	}
+	if(maze[Sx][Sy + 1] == 0 && flag == 0){
+		maze[Sx][Sy + 1] = 2;
+		return rreachable(maze, Sx, Sy + 1, Gx, Gy, flag);
+	}
+	if(maze[Sx + 1][Sy] == 0 && flag == 0){
+		maze[Sx + 1][Sy] = 2;
+		rreachable(maze, Sx + 1, Sy, Gx, Gy, flag);
+	}
+	if(maze[Sx][Sy - 1] == 0 && flag == 0){
+		maze[Sx][Sy - 1] = 2;
+		rreachable(maze, Sx, Sy - 1, Gx, Gy, flag);
+	}
+	if(maze[Sx - 1][Sy] == 0 && flag == 0){
+		rreachable(maze, Sx - 1, Sy, Gx, Gy, flag);
+		maze[Sx - 1][Sy] = 2;
+	}
+
+	return maze;
+
+
+}
+int** reachable(int** maze, int dim, int Sx, int Sy, int Gx, int Gy){
+	int **mazeCopy = initial(dim + 2);
+	for(int i = 0; i < dim + 2; i++){
+		for(int j = 0; j < dim + 2; j++) mazeCopy[i][j] = maze[i][j];
+	}
+	mazeCopy[Sx][Sy] = 3;
+	return rreachable(mazeCopy, Sx, Sy, Gx, Gy, 0);
+}
 #endif
+
+
+
+
+
+
+
+
+
+
+
+
+
