@@ -1,46 +1,27 @@
 #include "global.h"
 int main(){
 	//printMaze(mazeGenerator(10,0.23),10);
-	//const int N = 1e2;
-//	clock_t start, end;
- //   start = clock();
+
+	clock_t start, end, start1;
+    start1 = clock();
 	int Sx = 0, Sy = 0, Gx = 0, Gy = 0, a, b;
-	int dim = 500;
+	int dim = 750;
 	int allcell = dim * dim;
-	int **maze;
-	maze = mazeGenerator(dim,0.15);
+	char **maze;
+	for(int i = 0; i < 1000; i++){
+	maze = mazeGenerator(dim,0.30);
 
 
-	srand((int)time(NULL));
-	while(maze[Sx][Sy] == 1){
-		a = rand() % allcell + 1;
-		if((a % dim) == 0){
-			Sx = a / dim;
-			Sy = dim;
-		}else{
-			Sx = a / dim + 1;
-			Sy = a % dim;
-		}
-	}
-	while(maze[Gx][Gy] == 1){
-		a = rand() % allcell + 1;
-		if((a % dim) == 0){
-			Gx = a / dim;
-			Gy = dim;
-		}else{
-			Gx = a / dim + 1;
-			Gy = a % dim;
-		}
-	}
-	printf("%d %d %d %d\n" ,Sx,Sy,Gx,Gy);
-	reachable(maze, dim, Sx, Sy, Gx, Gy);
 
-	for(int i = 0; i < dim + 2; i++){
-		free(maze[i]);
-	}
+	start = clock();
+	printf("time: %f s\n", ((double)(start - start1)) / CLOCKS_PER_SEC);
+	reachable(maze, dim);
 
- //   end = clock();
-  //  printf("time: %f s\n", ((double)(end - start)) / CLOCKS_PER_SEC / N);
+
+
+    end = clock();
+    printf("time: %f s\n", ((double)(end - start)) / CLOCKS_PER_SEC);
+    }
     return 0;
 
 }
