@@ -3,7 +3,10 @@
 #include<stdio.h>
 #include <stdlib.h>
 #include<time.h>
-
+#include"queue.h"
+void freememory(char** a, int n){
+	for(int i = 0; i < n; i++)free(a[i]);
+}
 
 //This function will allocate for a square dynamic 2-dimensional array and initialize to 0.
 char** initial(int n){
@@ -102,8 +105,11 @@ void reachable(char** maze, int dim){
 	}
 	mazeCopy[1][1] = '3';
 	rreachable(mazeCopy, Sx, Sy, dim);
+	freememory(mazeCopy, dim + 2);
 //	printMaze(mazeCopy, dim);
 }
+
+//a BFS algorithm to find the shortest path
 
 #endif
 
