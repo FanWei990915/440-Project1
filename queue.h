@@ -35,17 +35,15 @@ Queue* push(Queue *queue, int x1, int y1){
 
 }
 
-void pop(Queue *queue){
-	if(queue == NULL)return;
-	if(queue->size == 1){
-		free(queue);
-		queue = NULL;
-	}else{
+Queue* pop(Queue *queue){
+	if(queue == NULL)return NULL;
+	if(queue->size == 1) return NULL;
+	else{
 		queue->size -= 1;
 		Node *temp = queue->front->next;
-		free(queue->front);
+	//	free(queue->front);
 		queue->front = temp;
-
+		return queue;
 	}
 
 }
