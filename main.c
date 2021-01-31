@@ -2,14 +2,14 @@
 #include"BFS.h"
 #include"DFS.h"
 #include"queue.h"
-
+#include"stack.h"
 int main(){
 	//printMaze(mazeGenerator(10,0.23),10);
 
 	clock_t start, end, start1;
     start1 = clock();
 	int Sx = 0, Sy = 0, Gx = 0, Gy = 0, a, b;
-	int dim = 10000;
+	int dim = 100000;
 	int allcell = dim * dim;
 	char **maze;
 
@@ -19,9 +19,9 @@ int main(){
 
 	start = clock();
 	printf("time: %f s\n", ((double)(start - start1)) / CLOCKS_PER_SEC);
-	//reachable(maze, dim);
+	reachable(maze, dim);
 	
-	BFS(maze, dim);
+	//BFS(maze, dim);
 	freememory(maze, dim + 2);
 
 
@@ -30,5 +30,4 @@ int main(){
 
    
     return 0;
-
 }

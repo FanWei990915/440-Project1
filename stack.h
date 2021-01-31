@@ -7,14 +7,14 @@ typedef struct Stack{
 	int size;
 }Stack;
 
-Stack* push(Stack* stack, int x, int y){
+Stack* pushstack(Stack* stack, int x1, int y1){
 	Node *temp = (Node*)malloc(sizeof(Node));
 	temp->x = x1;
 	temp->y = y1;
+	temp->next = NULL;
 	if(stack == NULL){
-		temp->next = NULL;
-		stack = (Stack*)malloc(sizeof(stack));
-		stack->size == 1;
+		stack = (Stack*)malloc(sizeof(Stack));
+		stack->size = 1;
 		stack->head = temp;
 		return stack;		
 	}else{
@@ -25,9 +25,9 @@ Stack* push(Stack* stack, int x, int y){
 	}
 }
 
-Stack* pop(Stack* stack, int x, int y){
+Stack* popstack(Stack* stack){
 	if(stack == NULL || stack->size == 1) return NULL;
-	stack -= 1;
+	stack->size -= 1;
 	stack->head = stack->head->next;
 	return stack;
 }
