@@ -1,8 +1,15 @@
-#ifndef HEADER_FILE
-#define HEADER_FILE
+#ifndef GLOBAL_H
+#define GLOBAL_H
 #include<stdio.h>
 #include <stdlib.h>
 #include<time.h>
+
+typedef struct Node{
+	int x;
+	int y;
+	struct Node *next;
+}Node;
+
 void freememory(char** a, int n){
 	for(int i = 0; i < n; i++)free(a[i]);
 }

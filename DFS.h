@@ -1,5 +1,5 @@
-#ifndef HEADER_FILE3
-#define HEADER_FILE3
+#ifndef DFS_H
+#define DFS_H
 #include "global.h"
 /* a DFS algorithm that takes a maze and two locations within it, and determines whether one is 
    reachable from the other.*/
@@ -13,21 +13,21 @@ void rreachable(char** maze, int Sx, int Sy, int dim){
 		maze[Sx][Sy + 1] = '2';
 		rreachable(maze, Sx, Sy + 1, dim);
 	}
+	if(maze[dim][dim] == '3') return;
 	if(maze[Sx + 1][Sy] == '0' && maze[dim][dim] != '3'){
 		maze[Sx + 1][Sy] = '2';
 		rreachable(maze, Sx + 1, Sy, dim);
 	}
+	if(maze[dim][dim] == '3') return;
 	if(maze[Sx][Sy - 1] == '0' && maze[dim][dim] != '3'){
 		maze[Sx][Sy - 1] = '2';
 		rreachable(maze, Sx, Sy - 1, dim);
 	}
+	if(maze[dim][dim] == '3') return;
 	if(maze[Sx - 1][Sy] == '0' && maze[dim][dim] != '3'){
 		maze[Sx - 1][Sy] = '2';
 		rreachable(maze, Sx - 1, Sy, dim);
 	}
-	return;
-
-
 }
 void reachable(char** maze, int dim){
 	char **mazeCopy = initial(dim + 2);

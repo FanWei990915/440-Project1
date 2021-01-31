@@ -1,6 +1,6 @@
 
-#ifndef HEADER_FILE2
-#define HEADER_FILE2
+#ifndef BFS_H
+#define BFS_H
 
 #include"global.h"
 #include"queue.h"
@@ -35,7 +35,7 @@ void printBFS(char** maze, Queue *queue){
 	printMaze(maze, dim);
 }
 void rBFS(char** maze, int dim, Queue* queue){
-	if(queue == NULL || maze[dim][dim] != '0') return;
+/*	if(queue == NULL || maze[dim][dim] != '0') return;
 	int n = queue->size;
 	for(int i = 0; i < n; i++){
 		int Sx = queue->front->x, Sy = queue->front->y;
@@ -57,7 +57,31 @@ void rBFS(char** maze, int dim, Queue* queue){
 		}
 		queue = pop(queue);
 	}
-	rBFS(maze, dim, queue);	
+	rBFS(maze, dim, queue);	*/
+	while(((queue!= NULL) && (maze[dim][dim] == '0'))){
+		int n = queue->size;
+		for(int i = 0; i < n; i++){
+			int Sx = queue->front->x;
+			int Sy = queue->front->y;
+			if(maze[Sx][Sy + 1] == '0'){
+				maze[Sx][Sy + 1] = 'z';//previous is left
+				queue = push(queue, Sx, Sy + 1);
+			}
+			if(maze[Sx + 1][Sy] == '0'){
+				maze[Sx + 1][Sy] = 's';//previous is up
+				queue = push(queue, Sx + 1, Sy);
+			}
+			if(maze[Sx][Sy - 1] == '0'){
+				maze[Sx][Sy - 1] = 'y';//previous is right
+				queue = push(queue, Sx, Sy - 1);
+			}
+			if(maze[Sx - 1][Sy] == '0'){
+				maze[Sx - 1][Sy] = 'x';//previous is down
+				queue = push(queue, Sx - 1, Sy);
+			}
+			queue = pop(queue);
+		}
+	}
 }
 
 
@@ -76,7 +100,7 @@ void BFS(char** maze, int dim){
 	for(int i = 0; i < dim + 2; i++){
 		for(int j = 0; j < dim + 2; j++) mazeCopy[i][j] = maze[i][j];
 	}
-	if(queue != NULL) printBFS(mazeCopy, queue);
+//	if(queue != NULL) printBFS(mazeCopy, queue);
 	freememory(mazeCopy, dim + 2);
 }
 #endif

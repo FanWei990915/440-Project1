@@ -1,11 +1,6 @@
-#ifndef HEADER_FILE1
-#define HEADER_FILE1
+#ifndef QUEUE_H
+#define QUEUE_H
 #include "global.h"
-typedef struct Node{
-	int x;
-	int y;
-	struct Node *next;
-}Node;
 
 typedef struct Queue{
 	Node *front;
