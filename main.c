@@ -1,5 +1,7 @@
-#include "global.h"
-
+#include"global.h"
+#include"BFS.h"
+#include"DFS.h"
+#include"queue.h"
 
 int main(){
 	//printMaze(mazeGenerator(10,0.23),10);
@@ -7,7 +9,7 @@ int main(){
 	clock_t start, end, start1;
     start1 = clock();
 	int Sx = 0, Sy = 0, Gx = 0, Gy = 0, a, b;
-	int dim = 500;
+	int dim = 30;
 	int allcell = dim * dim;
 	char **maze;
 

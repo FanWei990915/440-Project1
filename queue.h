@@ -1,7 +1,6 @@
 #ifndef HEADER_FILE1
 #define HEADER_FILE1
-#include<stdio.h>
-#include <stdlib.h>
+#include "global.h"
 typedef struct Node{
 	int x;
 	int y;
