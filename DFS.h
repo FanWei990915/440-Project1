@@ -75,7 +75,7 @@ void reachable(char** maze, int dim){
 	mazeCopy[1][1] = '3';
 	rreachable(mazeCopy, dim, stack);
 	if(mazeCopy[dim][dim] == '0') printf("NO SOLUTION!\n");;
-	//printDFS(mazeCopy, stack,dim);
+	printDFS(mazeCopy, stack,dim);
 	freememory(mazeCopy, dim + 2);
 }
 #endif

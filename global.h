@@ -74,7 +74,24 @@ void printMaze(char** maze, int dim){
 	}
 }
 
-
+//Maze optimization 
+void optimization(char** maze, int dim){
+	int size = 0, total = 0;
+	for(int i = 1; i <= dim; i++){
+		for(int j = 1; j <= dim; j ++){
+			if(maze[i][j] == '0'){
+				total++;
+				if(!((maze[i - 1][j] == '1' && maze[i + 1][j] == '1') || (maze[i][j + 1] == '1' && maze[i][j - 1] == '1'))){
+					maze[i][i] = '2';
+					size++;
+				}
+			
+			}
+		}
+	}
+	printf("%d %d\n", total, size);
+	//printMaze(maze, dim);
+}
 #endif
 
 
