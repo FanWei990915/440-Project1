@@ -6,12 +6,11 @@
 int main(){
 	//printMaze(mazeGenerator(10,0.23),10);
 
-	int Sx = 0, Sy = 0, Gx = 0, Gy = 0, a, b;
-	int dim = 20000;
-	int allcell = dim * dim;
+	int dim = 20;
+	float density = 0.25;
 	char **maze;
 
-	maze = mazeGenerator(dim,0.25);
+	maze = mazeGenerator(dim, density);
 
 
 
@@ -25,7 +24,7 @@ int main(){
 
 	//optimization(maze, dim);
 
-	BBFS(maze, dim);
+	//BBFS(maze, dim);
 	//freememory(maze, dim + 2);
 
 

@@ -1,7 +1,7 @@
 
 #ifndef BFS_H
 #define BFS_H
-
+#include <unistd.h>
 #include"global.h"
 #include"queue.h"
 //a BFS algorithm to find the shortest path
@@ -91,9 +91,12 @@ Queue* sshort(char** maze, int dim, Node* node){
 void printBFS(char** maze, Queue *queue, int dim){
 	while(queue != NULL){
 		maze[queue->front->x][queue->front->y] = '2';
+		printMaze(maze, dim);
+		sleep(1);
 		queue = pop(queue);
+		system("cls");
 	}
-	printMaze(maze, dim);
+	//printMaze(maze, dim);
 }
 void rBFS(char** maze, int dim, Queue* queue){
 	if(queue == NULL || maze[dim][dim] != '0') return;
@@ -116,7 +119,10 @@ void rBFS(char** maze, int dim, Queue* queue){
 			maze[Sx - 1][Sy] = 'x';//previous is down
 			queue = push(queue, Sx - 1, Sy);
 		}
+	//	printMaze(maze, dim);
+	//	sleep(1);
 		queue = pop(queue);
+	//	system("cls");
 	}
 	rBFS(maze, dim, queue);	
 /*	while(((queue!= NULL) && (maze[dim][dim] == '0'))){
@@ -289,11 +295,11 @@ void BFS(char** maze, int dim){
 	rBFS(mazeCopy, dim, queue);
 	queue = shortpath(mazeCopy, dim);
 	//printMaze(mazeCopy, dim);
-	//printf("\n");
-	//for(int i = 0; i < dim + 2; i++){
-	//	for(int j = 0; j < dim + 2; j++) mazeCopy[i][j] = maze[i][j];
-	//}
-	//if(queue != NULL) printBFS(mazeCopy, queue, dim);
-	//freememory(mazeCopy, dim + 2);
+	printf("\n");
+	for(int i = 0; i < dim + 2; i++){
+		for(int j = 0; j < dim + 2; j++) mazeCopy[i][j] = maze[i][j];
+	}
+	if(queue != NULL) printBFS(mazeCopy, queue, dim);
+	freememory(mazeCopy, dim + 2);
 }
 #endif
