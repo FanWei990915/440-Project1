@@ -20,8 +20,10 @@ int main(){
 	start = clock();
 	printf("time: %f s\n", ((double)(start - start1)) / CLOCKS_PER_SEC);
 	//reachable(maze, dim);
+	BFS(maze, dim);
 	printf("\n");
 	//optimization(maze, dim);
+
 	BBFS(maze, dim);
 	freememory(maze, dim + 2);
 

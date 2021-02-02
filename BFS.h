@@ -47,22 +47,32 @@ Queue* sshort(char** maze, int dim, Node* node){
 	int x = queue->back->x; 
 	int y = queue->back->y;
 	while(!(x == 1 && y == 1)){
+		if(x == dim && y == dim) break;
 		if(maze[x][y] == 'z') y--;
 		else if(maze[x][y] == 's') x--;
 		else if(maze[x][y] == 'y') y++;
 		else if(maze[x][y] == 'x') x++;
+		else if(maze[x][y] == 'a') y++;
+		else if(maze[x][y] == 'b') x++;
+		else if(maze[x][y] == 'c') y--;
+		else if(maze[x][y] == 'd') x--;
 		queue = push(queue, x, y);
 	};
 	queue = push(queue, Q2x, Q2y);
 	x = queue->back->x; 
 	y = queue->back->y;
-	while(!(x == dim && y == dim)){
-		if(maze[x][y] == 'a') y++;
+	while(!(x == 1 && y == 1)){
+		if(x == dim && y == dim) break;
+		if(maze[x][y] == 'z') y--;
+		else if(maze[x][y] == 's') x--;
+		else if(maze[x][y] == 'y') y++;
+		else if(maze[x][y] == 'x') x++;
+		else if(maze[x][y] == 'a') y++;
 		else if(maze[x][y] == 'b') x++;
 		else if(maze[x][y] == 'c') y--;
 		else if(maze[x][y] == 'd') x--;
 		queue = push(queue, x, y);
-	}
+	};
 	return queue;
 }
 
@@ -125,7 +135,7 @@ void rBFS(char** maze, int dim, Queue* queue){
 }
 
 Node* rBBFS(char** maze, int dim, Queue* queue1, Queue* queue2){
-	while(queue1 != NULL && queue2 != NULL){
+	while((queue1 != NULL) && (queue2 != NULL)){
 		int Q1x = queue1->front->x, Q2x = queue2->front->x, Q1y = queue1->front->y, Q2y = queue2->front->y;	
 		if(maze[Q1x][Q1y + 1] == '0'){
 			maze[Q1x][Q1y + 1] = 'z';//previous is left
@@ -172,14 +182,15 @@ Node* rBBFS(char** maze, int dim, Queue* queue1, Queue* queue2){
 			return temp;
 		}
 		
+
 		if(maze[Q2x][Q2y - 1] == '0'){
 			maze[Q2x][Q2y - 1] = 'a';//previous is right
 			queue2 = push(queue2, Q2x, Q2y - 1);
 		}
-		if((int)maze[Q2x][Q2y + 1] > 60 && (int)maze[Q2x][Q2y + 1] < 110){
+		if((int)maze[Q2x][Q2y + 1] > 110){
 				Node *temp = (Node*)malloc(sizeof(Node));
-				temp->x = Q2x * dim + Q2y;
-				temp->y = Q2x * dim + Q2y + 1;
+				temp->y = Q2x * dim + Q2y;
+				temp->x = Q2x * dim + Q2y + 1;
 				temp->next = NULL;
 			return temp;
 		}
@@ -187,10 +198,10 @@ Node* rBBFS(char** maze, int dim, Queue* queue1, Queue* queue2){
 			maze[Q2x - 1][Q2y] = 'b';//previous is down
 			queue2 = push(queue2, Q2x - 1, Q2y);
 		}
-		if((int)maze[Q2x][Q2y + 1] > 60 && (int)maze[Q2x][Q2y + 1] < 110){
+		if((int)maze[Q2x][Q2y + 1] > 110){
 				Node *temp = (Node*)malloc(sizeof(Node));
-				temp->x = Q2x * dim + Q2y;
-				temp->y = Q2x * dim + Q2y + 1;
+				temp->y = Q2x * dim + Q2y;
+				temp->x = Q2x * dim + Q2y + 1;
 				temp->next = NULL;
 			return temp;
 		}
@@ -198,10 +209,10 @@ Node* rBBFS(char** maze, int dim, Queue* queue1, Queue* queue2){
 			maze[Q2x][Q2y + 1] = 'c';//previous is left
 			queue2 = push(queue2, Q2x, Q2y + 1);
 		}
-		if((int)maze[Q2x][Q2y + 1] > 60 && (int)maze[Q2x][Q2y + 1] < 110){
+		if((int)maze[Q2x][Q2y + 1] > 110){
 				Node *temp = (Node*)malloc(sizeof(Node));
-				temp->x = Q2x * dim + Q2y;
-				temp->y = Q2x * dim + Q2y + 1;
+				temp->y = Q2x * dim + Q2y;
+				temp->x = Q2x * dim + Q2y + 1;
 				temp->next = NULL;
 			return temp;
 		}
@@ -209,13 +220,15 @@ Node* rBBFS(char** maze, int dim, Queue* queue1, Queue* queue2){
 			maze[Q2x + 1][Q2y] = 'd';//previous is up
 			queue2 = push(queue2, Q2x + 1, Q2y);
 		}
-		if((int)maze[Q2x][Q2y + 1] > 60 && (int)maze[Q2x][Q2y + 1] < 110){
+		if((int)maze[Q2x][Q2y + 1] > 110){
 				Node *temp = (Node*)malloc(sizeof(Node));
-				temp->x = Q2x * dim + Q2y;
-				temp->y = Q2x * dim + Q2y + 1;
+				temp->y = Q2x * dim + Q2y;
+				temp->x = Q2x * dim + Q2y + 1;
 				temp->next = NULL;
 			return temp;
 		}
+		queue1 = pop(queue1);
+		queue2 = pop(queue2);
 	}
 	return NULL;
 }
@@ -228,14 +241,36 @@ void BBFS(char** maze, int dim){
 		for(int j = 0; j < dim + 2; j++) mazeCopy[i][j] = maze[i][j];
 	}
 	mazeCopy[1][1] = '3';
-	mazeCopy[dim][dim] = '2';
+	mazeCopy[dim][dim] = '3';
 	Node *node = rBBFS(mazeCopy, dim, queue1, queue2);
 	if(node == NULL) printf("NO SOLUTION!\n");
-	else queue1 = sshort(mazeCopy, dim, node);
-	for(int i = 0; i < dim + 2; i++){
-		for(int j = 0; j < dim + 2; j++) mazeCopy[i][j] = maze[i][j];
+	else{
+		//printf("%d %d\n" ,node->x, node->y);
+	//	queue1 = sshort(mazeCopy, dim, node);
+	
+	//	for(int i = 0; i < dim + 2; i++){
+	//		for(int j = 0; j < dim + 2; j++) mazeCopy[i][j] = maze[i][j];
+	//	}
+		//printBFS(mazeCopy, queue1);
+		int Q1x, Q1y, Q2x, Q2y, Q1 = node->x, Q2 = node->y;
+		if((Q1 % dim) == 0){
+			Q1x = Q1 / dim;
+			Q1y = dim;
+		}else{
+			Q1x = Q1 / dim + 1;
+			Q1y = Q1 % dim;
+		}
+		if((Q2 % dim) == 0){
+			Q2x = Q2 / dim;
+			Q2y = dim;
+		}else{
+			Q2x = Q2 / dim + 1;
+			Q2y = Q2 % dim;
+		}
+		mazeCopy[Q1x][Q1y] = '3';
+		mazeCopy[Q2x][Q2y] = '3';
+		printMaze(mazeCopy, dim);
 	}
-	printBFS(mazeCopy, queue1);
 }
 void BFS(char** maze, int dim){
 	Queue *queue = NULL;
@@ -247,7 +282,8 @@ void BFS(char** maze, int dim){
 	mazeCopy[1][1] = '3';
 	rBFS(mazeCopy, dim, queue);
 	queue = shortpath(mazeCopy, dim);
-//	printMaze(mazeCopy, dim);
+	printMaze(mazeCopy, dim);
+	printf("\n");
 	for(int i = 0; i < dim + 2; i++){
 		for(int j = 0; j < dim + 2; j++) mazeCopy[i][j] = maze[i][j];
 	}
