@@ -12,8 +12,9 @@ typedef struct pnode{
 typedef struct da{
 	char prev;
 	int distance; //real distacne from source
+	char status;
 }da;
-void pushh(){
+void pushh(int x, int y, float total, int size, pnode heap[]){
 
 }
 void poph(){
@@ -24,36 +25,53 @@ float distance(int dim, int x, int y){
 	return sqrt((dim - x) * (dim - x) + (dim - y) * (dim - y));
 }
 
+void initialmc(int x, int y, int dis, da **maze, char prev, int size, pnode heap[]){
+	maze[x][y]->distance = dis;
+	maze[x][y]->prev = prev;
+	pushh(x, y, distance(dim, x, y) + dis, size, heap);
+}
+
+
 void Astar(char** maze, int dim, pnode heap[]){
-	int temp, x, y, size = 1;
+	int x, y, tempdis, size = 1;
 	heap[1].x = 1;
 	heap[1].y = 1;
 	float total = distance(dim, 1, 1);
-	char **mazeCopy = initial(dim + 2);
-	for(int i = 0; i < dim + 2; i++){
-		for(int j = 0; j < dim + 2; j++) mazeCopy[i][j] = maze[i][j];
+	heap[1].total = total;
+
+	da **mazeCopy = (da**)malloc((dim + 1) * sizeof(da*));
+	for(int i = 0; i <= dim; i++){
+		mazeCopy[i] = (da*)malloc((dim + 1) * sizeof(da));
+		for(int j  = 0; j <= dim; j++){
+			da[i][j]->status = '0';
+			da[i][j]->distance = 0;
+			da[i][j]->prev = '0';
 	}
-	mazeCopy[1][1] = '2';
+	
 	while(size > 0){
 		x = heap[1].x
 		y = heap[1].y
-		if(mazeCopy[x][y + 1] == '0' && maze[dim][dim] == '0'){
-			temp = 
-			maze[Sx][Sy + 1] = 'z';//previous is left
-			queue = push(queue, Sx, Sy + 1);
+		if(mazeCopy[x][y]->status == '0'){
+			tempdis = mazeCopy[x][y]->distacnce;
+			if(mazeCopy[x][y + 1]->status == '0' && maze[dim][dim] == '0'){
+				if(mazeCopy[x][y + 1]->prev == '0') initialmc(x, y + 1, tempdis + 1, mazeCopy, 'z', ++size, heap);
+				else if(mazeCopy[x][y + 1]->distance > (tempdis + 1)) initialmc(x, y + 1, tempdis + 1, mazeCopy, 'z', ++size, heap);
+			}
+			if(maze[x + 1][y] == '0' && maze[dim][dim] == '0'){
+				if(mazeCopy[x + 1][y]->prev == '0') initialmc(x + 1, y, tempdis + 1, mazeCopy, 's', ++size, heap);
+				else if(mazeCopy[x + 1][y]->distance > (tempdis + 1)) initialmc(x + 1, y, tempdis + 1, mazeCopy, 's', ++size, heap);
+			}
+			if(maze[x][y - 1] == '0' && maze[dim][dim] == '0'){
+				if(mazeCopy[x][y - 1]->prev == '0') initialmc(x, y - 1, tempdis + 1, mazeCopy, 'y', ++size, heap);
+				else if(mazeCopy[x][y - 1]->distance > (tempdis + 1)) initialmc(x, y - 1, tempdis + 1, mazeCopy, 'y', ++size, heap);				
+			}
+			if(maze[x - 1][y] == '0' && maze[dim][dim] == '0'){
+				if(mazeCopy[x - 1][y]->prev == '0') initialmc(x - 1, y, tempdis + 1, mazeCopy, 'x', ++size, heap);
+				else if(mazeCopy[x - 1][y]->distance > (tempdis + 1)) initialmc(x - 1, y, tempdis + 1, mazeCopy, 'x', ++size, heap);›››
+			}
 		}
-		if(maze[Sx + 1][Sy] == '0' && maze[dim][dim] == '0'){
-			maze[Sx + 1][Sy] = 's';//previous is up
-			queue = push(queue, Sx + 1, Sy);
-		}
-		if(maze[Sx][Sy - 1] == '0' && maze[dim][dim] == '0'){
-			maze[Sx][Sy - 1] = 'y';//previous is right
-			queue = push(queue, Sx, Sy - 1);
-		}
-		if(maze[Sx - 1][Sy] == '0' && maze[dim][dim] == '0'){
-			maze[Sx - 1][Sy] = 'x';//previous is down
-			queue = push(queue, Sx - 1, Sy);
-		}
+		pop()
+		size--;
 	}
 }
 
