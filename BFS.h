@@ -294,12 +294,12 @@ void BFS(char** maze, int dim){
 	mazeCopy[1][1] = '3';
 	rBFS(mazeCopy, dim, queue);
 	queue = shortpath(mazeCopy, dim);
-	//printMaze(mazeCopy, dim);
+	printMaze(mazeCopy, dim);
 	printf("\n");
 	for(int i = 0; i < dim + 2; i++){
 		for(int j = 0; j < dim + 2; j++) mazeCopy[i][j] = maze[i][j];
 	}
-	if(queue != NULL) printBFS(mazeCopy, queue, dim);
+	//if(queue != NULL) printBFS(mazeCopy, queue, dim);
 	freememory(mazeCopy, dim + 2);
 }
 #endif

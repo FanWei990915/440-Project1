@@ -9,8 +9,8 @@ pnode heap[100000000];
 int main(){
 	//printMaze(mazeGenerator(10,0.23),10);
 
-	int dim = 20;
-	float density = 0.25;
+	int dim = 50;
+	float density = 0.30;
 	char **maze;
 
 	maze = mazeGenerator(dim, density);
@@ -27,7 +27,7 @@ int main(){
 
 	//optimization(maze, dim);
 	
-	//BBFS(maze, dim);
+	BFS(maze, dim);
 	//freememory(maze, dim + 2);
 
 	Astar(maze, dim, heap);
