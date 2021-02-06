@@ -14,11 +14,40 @@ typedef struct da{
 	int distance; //real distacne from source
 	char status;
 }da;
-void pushh(int x, int y, float total, int size, pnode heap[]){
-
+void swap(pnode heap[], int a, int b){
+		heap[size].x = heap[size>>1].x;
+		heap[size].y = heap[size>>1].y;
+		heap[size].total = heap[size>>1].total;
+		heap[size>>1].x = x;
+		heap[size>>1].y = y;
+		heap[size>>1].total = total;
 }
-void poph(){
 
+void pushh(int x, int y, float total, int size, pnode heap[]){
+	heap[size].x = x;
+	heap[size].y = y;
+	heap[size].total = total;
+	while(size > 1){
+		if(heap[size].total >= heap[size/2].total) break;
+		heap[size].x = heap[size>>1].x;
+		heap[size].y = heap[size>>1].y;
+		heap[size].total = heap[size>>1].total;
+		heap[size>>1].x = x;
+		heap[size>>1].y = y;
+		heap[size>>1].total = total;
+		size>>=1;
+	}
+}
+void poph(pnode heap[], int size){
+	heap[1].x = heap[size].x;
+	heap[1].y = heap[size].y;
+	heap[1].total = heap[size].total;
+	size--;
+	int temp = 1;
+	while((temp<<1) <= size){
+		if((temp<<1 + 1) <= size) heap[(heap[temp<<1].total<heap[temp<<1+1].total)?(temp<<1):(temp<<1+1)]
+		
+	}
 }
 
 float distance(int dim, int x, int y){
@@ -67,7 +96,7 @@ void Astar(char** maze, int dim, pnode heap[]){
 			}
 			if(maze[x - 1][y] == '0' && maze[dim][dim] == '0'){
 				if(mazeCopy[x - 1][y]->prev == '0') initialmc(x - 1, y, tempdis + 1, mazeCopy, 'x', ++size, heap);
-				else if(mazeCopy[x - 1][y]->distance > (tempdis + 1)) initialmc(x - 1, y, tempdis + 1, mazeCopy, 'x', ++size, heap);›››
+				else if(mazeCopy[x - 1][y]->distance > (tempdis + 1)) initialmc(x - 1, y, tempdis + 1, mazeCopy, 'x', ++size, heap);
 			}
 		}
 		pop()
