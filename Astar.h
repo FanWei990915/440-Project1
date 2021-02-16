@@ -35,7 +35,7 @@ void pushh(int x, int y, float total, int size, pnode heap[]){
 	while(size > 1){
 		if(heap[size].total >= heap[size/2].total) break;
 		swap(heap, size, size/2);
-		size>>=1;
+		size = size / 2;
 	}
 }
 void poph(pnode heap[], int size){
@@ -47,11 +47,11 @@ void poph(pnode heap[], int size){
 	while((temp * 2) <= size){
 		if((temp * 2 + 1) <= size){
 			temp2 = (heap[temp * 2].total<heap[temp * 2 + 1].total)?(temp * 2):(temp * 2 + 1);
-			if(heap[temp2].total < heap[temp].total){
+			if(heap[temp2].total <= heap[temp].total){
 				swap(heap, temp2, temp);
-				temp<<=1;
+				temp = temp2;
 			}else break;
-		}else if(heap[temp * 2].total < heap[temp].total){
+		}else if(heap[temp * 2].total <= heap[temp].total){
 			swap(heap, temp * 2, temp);
 			temp<<=1;
 		}else break;
@@ -59,7 +59,9 @@ void poph(pnode heap[], int size){
 }
 
 float distance(int dim, int x, int y){
-	return sqrt((dim - x) * (dim - x) + (dim - y) * (dim - y));
+	float a = (1+(float)(1/(dim*2-x-y)))*sqrt((dim - x) * (dim - x) + (dim - y) * (dim - y));
+	return a;
+	return (dim * 2 - x - y);
 }
 
 void initialmc(int x, int y, int dis, da **maze, char prev, int size, pnode heap[], int dim){
@@ -73,13 +75,15 @@ void Astar(char** maze, int dim, pnode heap[]){
 	int x, y, tempdis, size = 1;
 	heap[1].x = 1;
 	heap[1].y = 1;
+
 	float total = distance(dim, 1, 1);
+
 	heap[1].total = total;
 
-	da **mazeCopy = (da**)malloc((dim + 1) * sizeof(da*));
-	for(int i = 0; i <= dim; i++){
-		mazeCopy[i] = (da*)malloc((dim + 1) * sizeof(da));
-		for(int j  = 0; j <= dim; j++){
+	da **mazeCopy = (da**)malloc((dim + 2) * sizeof(da*));
+	for(int i = 0; i <= dim + 1; i++){
+		mazeCopy[i] = (da*)malloc((dim + 2) * sizeof(da));
+		for(int j  = 0; j <= dim + 1; j++){
 			if(maze[i][j] == '1') mazeCopy[i][j].status = '1';
 			else mazeCopy[i][j].status = '0';
 			mazeCopy[i][j].distance = 0;
@@ -87,31 +91,53 @@ void Astar(char** maze, int dim, pnode heap[]){
 		}
 	}
 	mazeCopy[dim][dim].status = '3';
+	
 	while(size > 0){
 		x = heap[1].x;
 		y = heap[1].y;
+		//if(mazeCopy[x][y].status == '3')break;
 		if(mazeCopy[x][y].status == '0'){
 			tempdis = mazeCopy[x][y].distance;
+			//right
 			if(mazeCopy[x][y + 1].status == '0'){
-				if(mazeCopy[x][y + 1].prev == '0') initialmc(x, y + 1, tempdis + 1, mazeCopy, 'z', ++size, heap, dim);
-				else if(mazeCopy[x][y + 1].distance > (tempdis + 1)) initialmc(x, y + 1, tempdis + 1, mazeCopy, 'z', ++size, heap, dim);
+				if(mazeCopy[x][y + 1].prev == '0'){
+					initialmc(x, y + 1, tempdis + 1, mazeCopy, 'z', ++size, heap, dim);
+				}
+				else if(mazeCopy[x][y + 1].distance > (tempdis + 1)){
+					initialmc(x, y + 1, tempdis + 1, mazeCopy, 'z', ++size, heap, dim);
+				}
 			}
 			if(mazeCopy[x][y + 1].status == '3') break;
-			if(maze[x + 1][y] == '0'){
-				if(mazeCopy[x + 1][y].prev == '0') initialmc(x + 1, y, tempdis + 1, mazeCopy, 's', ++size, heap, dim);
-				else if(mazeCopy[x + 1][y].distance > (tempdis + 1)) initialmc(x + 1, y, tempdis + 1, mazeCopy, 's', ++size, heap, dim);
+			//down
+			if(mazeCopy[x + 1][y].status == '0'){
+				if(mazeCopy[x + 1][y].prev == '0'){
+					initialmc(x + 1, y, tempdis + 1, mazeCopy, 's', ++size, heap, dim);
+				}
+				else if(mazeCopy[x + 1][y].distance > (tempdis + 1)){
+					initialmc(x + 1, y, tempdis + 1, mazeCopy, 's', ++size, heap, dim);
+				}
 			}
-			if(maze[x + 1][y] == '3') break;
-			if(maze[x][y - 1] == '0'){
-				if(mazeCopy[x][y - 1].prev == '0') initialmc(x, y - 1, tempdis + 1, mazeCopy, 'y', ++size, heap, dim);
-				else if(mazeCopy[x][y - 1].distance > (tempdis + 1)) initialmc(x, y - 1, tempdis + 1, mazeCopy, 'y', ++size, heap, dim);				
+			if(mazeCopy[x + 1][y].status == '3') break;
+			//left
+			if(mazeCopy[x][y - 1].status == '0'){
+				if(mazeCopy[x][y - 1].prev == '0'){
+					initialmc(x, y - 1, tempdis + 1, mazeCopy, 'y', ++size, heap, dim);
+				}
+				else if(mazeCopy[x][y - 1].distance > (tempdis + 1)){
+					initialmc(x, y - 1, tempdis + 1, mazeCopy, 'y', ++size, heap, dim);		
+				}		
 			}
-			if(maze[x][y - 1] == '3') break;
-			if(maze[x - 1][y] == '0'){
-				if(mazeCopy[x - 1][y].prev == '0') initialmc(x - 1, y, tempdis + 1, mazeCopy, 'x', ++size, heap, dim);
-				else if(mazeCopy[x - 1][y].distance > (tempdis + 1)) initialmc(x - 1, y, tempdis + 1, mazeCopy, 'x', ++size, heap, dim);
+			if(mazeCopy[x][y - 1].status == '3') break;
+			//up
+			if(mazeCopy[x - 1][y].status == '0'){
+				if(mazeCopy[x - 1][y].prev == '0'){
+					initialmc(x - 1, y, tempdis + 1, mazeCopy, 'x', ++size, heap, dim);
+				}
+				else if(mazeCopy[x - 1][y].distance > (tempdis + 1)){
+					initialmc(x - 1, y, tempdis + 1, mazeCopy, 'x', ++size, heap, dim);
+				}
 			}
-			if(maze[x - 1][y] == '3') break;
+			if(mazeCopy[x - 1][y].status == '3') break;
 		}
 		mazeCopy[x][y].status = '2';
 		poph(heap, size);
@@ -126,7 +152,10 @@ void Astar(char** maze, int dim, pnode heap[]){
 		printf("\n");
 	
 	}
-}
 
+	
+
+
+}
 
 #endif

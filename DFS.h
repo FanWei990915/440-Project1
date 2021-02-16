@@ -20,7 +20,7 @@ void printDFS(char** maze, Stack *stack, int dim){
 void rreachable(char** maze, /*int Sx, int Sy,*/int dim, Stack *stack){
 /*	if(Sx == dim && Sy == dim){
 		maze[dim][dim] = '3';
-		printf("REACHABLE\n");
+		//printf("REACHABLE\n");
 		return;
 	}
 	if(maze[Sx][Sy + 1] == '0' && maze[dim][dim] != '3'){
@@ -65,7 +65,7 @@ void rreachable(char** maze, /*int Sx, int Sy,*/int dim, Stack *stack){
 		else stack = popstack(stack);
 	}
 }
-void reachable(char** maze, int dim){
+int reachable(char** maze, int dim){
 	Stack *stack = NULL;
 	stack = pushstack(stack, 1, 1);
 	char **mazeCopy = initial(dim + 2);
@@ -74,8 +74,12 @@ void reachable(char** maze, int dim){
 	}
 	mazeCopy[1][1] = '3';
 	rreachable(mazeCopy, dim, stack);
-	if(mazeCopy[dim][dim] == '0') printf("NO SOLUTION!\n");;
-	printDFS(mazeCopy, stack,dim);
-	freememory(mazeCopy, dim + 2);
+	if(mazeCopy[dim][dim] == '0'){
+		//printf("NO SOLUTION!\n");
+		return 0;
+	}
+	//if(dim <= 200) printDFS(mazeCopy, stack,dim);
+	//freememory(mazeCopy, dim + 2);
+	return 1;
 }
 #endif
