@@ -151,6 +151,7 @@ void rBFS(char** maze, int dim, Queue* queue){
 	}*/
 }
 
+//bi-direction BFS. Since the origin and destination are fixed, it didn't improve too much. 
 Node* rBBFS(char** maze, int dim, Queue* queue1, Queue* queue2){
 	while((queue1 != NULL) && (queue2 != NULL)){
 		int Q1x = queue1->front->x, Q2x = queue2->front->x, Q1y = queue1->front->y, Q2y = queue2->front->y;	
@@ -284,7 +285,7 @@ void BBFS(char** maze, int dim){
 
 	}
 }
-void BFS(char** maze, int dim){
+Queue* BFS(char** maze, int dim){
 	Queue *queue = NULL;
 	queue = push(queue, 1, 1);
 	char **mazeCopy = initial(dim + 2);
@@ -293,7 +294,8 @@ void BFS(char** maze, int dim){
 	}
 	mazeCopy[1][1] = '3';
 	rBFS(mazeCopy, dim, queue);
-	//queue = shortpath(mazeCopy, dim);
+	queue = shortpath(mazeCopy, dim);
+	return queue;
 	/*printMaze(mazeCopy, dim);
 	printf("\n");
 	for(int i = 0; i < dim + 2; i++){

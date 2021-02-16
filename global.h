@@ -49,12 +49,14 @@ char** mazeGenerator(int n, float p){
 	while(temp < totalNumOccupied){
 		randomnum = rand() % allcell + 2;
 		//transform them to coordinate and set it to "1"
-		if((randomnum % n) == 0 && mazeMap[randomnum / n][n] == '0'){
-			mazeMap[randomnum / n][n] = '1';
+		int a = randomnum % n;
+		int b = randomnum / n;
+		if(a == 0 && mazeMap[b][n] == '0'){
+			mazeMap[b][n] = '1';
 			temp++;
 		}
-		else if(mazeMap[randomnum / n + 1][randomnum % n] == '0'){
-			mazeMap[randomnum / n + 1][randomnum % n] = '1';
+		else if(mazeMap[b + 1][a] == '0'){
+			mazeMap[b + 1][a] = '1';
 			temp++;
 		}
 	}

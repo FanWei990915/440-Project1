@@ -17,7 +17,10 @@ void printDFS(char** maze, Stack *stack, int dim){
 	}
 }
 
-void rreachable(char** maze, /*int Sx, int Sy,*/int dim, Stack *stack){
+void rreachable(char** maze, /*int Sx, int Sy,*/int dim, Stack *stack, int x, int y){
+
+//if recursion is too depp, it will cause stack overflow
+
 /*	if(Sx == dim && Sy == dim){
 		maze[dim][dim] = '3';
 		//printf("REACHABLE\n");
@@ -43,7 +46,7 @@ void rreachable(char** maze, /*int Sx, int Sy,*/int dim, Stack *stack){
 		rreachable(maze, Sx - 1, Sy, dim);
 	}*/
 	while(stack != NULL){
-		if(maze[dim][dim] != '0') break;
+		if(maze[x][y] != '0') break;
 		int Sx = stack->head->x;
 		int Sy = stack->head->y;
 		if(maze[Sx][Sy + 1] == '0'){
@@ -65,7 +68,7 @@ void rreachable(char** maze, /*int Sx, int Sy,*/int dim, Stack *stack){
 		else stack = popstack(stack);
 	}
 }
-int reachable(char** maze, int dim){
+int reachable(char** maze, int dim, int x, int y){
 	Stack *stack = NULL;
 	stack = pushstack(stack, 1, 1);
 	char **mazeCopy = initial(dim + 2);
@@ -73,8 +76,8 @@ int reachable(char** maze, int dim){
 		for(int j = 0; j < dim + 2; j++) mazeCopy[i][j] = maze[i][j];
 	}
 	mazeCopy[1][1] = '3';
-	rreachable(mazeCopy, dim, stack);
-	if(mazeCopy[dim][dim] == '0'){
+	rreachable(mazeCopy, dim, stack, x, y);
+	if(mazeCopy[x][y] == '0'){
 		//printf("NO SOLUTION!\n");
 		return 0;
 	}
