@@ -18,7 +18,7 @@ int main(){
 	if(dim <= 200)printMaze(maze, dim);*/
 
 //printf("%d\n", RAND_MAX);
-	int total = 0;
+/*	int total = 0;
 	float p;
 	char **maze;
 	for(int i = 20; i <=80; i++){
@@ -30,7 +30,9 @@ int main(){
 		printf("%f,%f,,,,\n", p, total/1000.0);
 		total = 0;
 
-	}
+	}*/
+	char** maze  = mazeGenerator(500, 0);
+	Astar(maze, 500, heap);
 
 /*	clock_t start, end, start1;
     start1 = clock();

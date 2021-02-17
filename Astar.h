@@ -28,6 +28,7 @@ void swap(pnode heap[], int a, int b){
 		heap[b].total = temptotal;
 }
 
+//binary heap push
 void pushh(int x, int y, float total, int size, pnode heap[]){
 	heap[size].x = x;
 	heap[size].y = y;
@@ -38,6 +39,8 @@ void pushh(int x, int y, float total, int size, pnode heap[]){
 		size = size / 2;
 	}
 }
+
+//binary heap pop
 void poph(pnode heap[], int size){
 	heap[1].x = heap[size].x;
 	heap[1].y = heap[size].y;
@@ -58,9 +61,10 @@ void poph(pnode heap[], int size){
 	}
 }
 
+//heuristic function
 float distance(int dim, int x, int y){
-	float a = (1+(float)(1/(dim*2-x-y)))*sqrt((dim - x) * (dim - x) + (dim - y) * (dim - y));
-	return a;
+	//float a = (1+(float)(1/(dim*2-x-y)))*sqrt((dim - x) * (dim - x) + (dim - y) * (dim - y));
+	//return a;
 	return (dim * 2 - x - y);
 }
 

@@ -4,7 +4,7 @@
 #include "queue.h"
 #include "stack.h"
 #include "DFS.h"
-int strategy1(char** maze, int dim){
+int strategy1(char** maze, int dim, float q){
 	int a, b;
 	char **mazeFire = initial(dim + 2);
 	for(int i = 0; i < dim + 2; i++){
@@ -26,6 +26,7 @@ int strategy1(char** maze, int dim){
 			Node *temp = (Node*)malloc(sizeof(Node));
 			temp->x = b;
 			temp->y = dim;
+			temp->next = NULL;
 			linklist = temp;
 			break;
 		}
@@ -34,6 +35,7 @@ int strategy1(char** maze, int dim){
 			Node *temp = (Node*)malloc(sizeof(Node));
 			temp->x = b + 1;
 			temp->y = a;
+			temp->next = NULL;
 			break;
 		}
 	}
@@ -48,7 +50,7 @@ int strategy1(char** maze, int dim){
 	}
 
 	while(stack != NULL){
-		flaming(mazeFire, dim, linklist);
+		linklist = flaming(mazeFire, dim, linklist, q);
 		if(mazeFire[stack->head->x][stack->head->y] == '*') return 0;
 		stack = popstack(stack);
 	}
