@@ -3,7 +3,7 @@
 #include "global.h"
 //It is too time consuming to traverse all the points of the maze, so I store all cells that are flaming by a linklist.
 int neighbor(int x, int y, char** maze){
-	int temp = 0
+	int temp = 0;
 	if(maze[x][y + 1] == '*') temp++;
 	if(maze[x][y - 1] == '*') temp++;
 	if(maze[x + 1][y] == '*') temp++;
@@ -17,7 +17,7 @@ void ini(Node *newFireCopy, int x, int y){
 	temp->y = y;
 	temp->next = NULL;
 	newFireCopy->next = temp;
-	newFireCopy = newFireCopt->next;
+	newFireCopy = newFireCopy->next;
 }
 
 Node* flaming(char** maze, int dim, Node *linklist, float q){
@@ -28,8 +28,9 @@ Node* flaming(char** maze, int dim, Node *linklist, float q){
 	float prob;
 	Node *newFire = (Node*)malloc(sizeof(Node));
 	newFire->next = NULL;
-	Ndoe *newFireCopy = newFire;
+	Node *newFireCopy = newFire;
 
+	srand((int)time(NULL));
 	while(temp->next != NULL){
 		 int around = 0;
 		 x = temp->next->x;
@@ -37,7 +38,7 @@ Node* flaming(char** maze, int dim, Node *linklist, float q){
 		 
 		 if(maze[x][y + 1] == '0'){
 		 	prob = 1 - pow(1 - q, neighbor(x, y + 1, maze));
-		 	generate a random number n such that 0 < n < 1;
+		 	float n = (float)rand()/RAND_MAX;
 		 	if(n <= prob){
 		 		ini(newFireCopy, x, y + 1);
 		 		around++;
@@ -46,7 +47,7 @@ Node* flaming(char** maze, int dim, Node *linklist, float q){
 		 
 		 if(maze[x][y - 1] == '0'){
 		 	prob = 1 - pow(1 - q, neighbor(x, y - 1, maze));
-		 	generate a random number n such that 0 < n < 1;
+		 	float n = (float)rand()/RAND_MAX;
 		 	if(n <= prob){
 		 		ini(newFireCopy, x, y - 1);
 		 		around++;
@@ -55,7 +56,7 @@ Node* flaming(char** maze, int dim, Node *linklist, float q){
 		 
 		 if(maze[x - 1][y] == '0'){
 		 	prob = 1 - pow(1 - q, neighbor(x - 1, y, maze));
-		 	generate a random number n such that 0 < n < 1;
+		 	float n = (float)rand()/RAND_MAX;
 		 	if(n <= prob){
 		 		ini(newFireCopy, x - 1, y);
 		 		around++;
@@ -64,7 +65,7 @@ Node* flaming(char** maze, int dim, Node *linklist, float q){
 		 
 		 if(maze[x + 1][y] == '0'){
 		 	prob = 1 - pow(1 - q, neighbor(x + 1, y, maze));
-		 	generate a random number n such that 0 < n < 1;
+		 	float n = (float)rand()/RAND_MAX;
 		 	if(n <= prob){
 				ini(newFireCopy, x + 1, y);
 		 		around++;
@@ -82,7 +83,7 @@ Node* flaming(char** maze, int dim, Node *linklist, float q){
 		Node *tempp = (Node*)malloc(sizeof(Node));
 		tempp->x = x;
 		tempp->y = y;
-		tempp->next = NULL
+		tempp->next = NULL;
 		temp->next = tempp;
 	}
 	linklist = temp1->next;

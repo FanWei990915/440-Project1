@@ -4,6 +4,7 @@
 #include "queue.h"
 #include "stack.h"
 #include "DFS.h"
+#include "flamingFire.h"
 int strategy1(char** maze, int dim, float q){
 	int a, b;
 	char **mazeFire = initial(dim + 2);
@@ -17,8 +18,9 @@ int strategy1(char** maze, int dim, float q){
 	//randomly createa a fire and use * to represent
 	srand((int)time(NULL));
 	int all = dim * dim - 2;
+	int randomnum;
 	while(1 == 1){
-		randomnum = rand() % allcell + 2;
+		randomnum = rand() % all + 2;
 	    a = randomnum % dim;
 		b = randomnum / dim;
 		if(a == 0 && maze[b][dim] == '0'){
@@ -36,6 +38,7 @@ int strategy1(char** maze, int dim, float q){
 			temp->x = b + 1;
 			temp->y = a;
 			temp->next = NULL;
+			linklist = temp;
 			break;
 		}
 	}

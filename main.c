@@ -4,7 +4,7 @@
 #include"queue.h"
 #include"stack.h"
 #include"Astar.h"
-
+#include"Strategy1.h"
 pnode heap[100000000];
 int main(){
 /*	int dim; 
