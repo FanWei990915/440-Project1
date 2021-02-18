@@ -63,7 +63,7 @@ void poph(pnode heap[], int size){
 
 //heuristic function
 float distance(int dim, int x, int y){
-	//float a = (1+(float)(1/(dim*2-x-y)))*sqrt((dim - x) * (dim - x) + (dim - y) * (dim - y));
+	float a = (1+(float)(1/(dim*2-x-y)))*sqrt((dim - x) * (dim - x) + (dim - y) * (dim - y));
 	//return a;
 	return (dim * 2 - x - y);
 }
@@ -71,7 +71,7 @@ float distance(int dim, int x, int y){
 void initialmc(int x, int y, int dis, da **maze, char prev, int size, pnode heap[], int dim){
 	maze[x][y].distance = dis;
 	maze[x][y].prev = prev;
-	pushh(x, y, distance(dim, x, y) + dis, size, heap);
+	pushh(x, y, distance(dim, x, y) + (float)dis, size, heap);
 }
 
 

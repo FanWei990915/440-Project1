@@ -5,6 +5,7 @@
 #include"stack.h"
 #include"Astar.h"
 #include"Strategy1.h"
+#include"Strategy2.h"
 pnode heap[100000000];
 int main(){
 /*	int dim; 
@@ -32,8 +33,10 @@ int main(){
 
 	}*/
 	int dim = 50;
-	char** maze  = mazeGenerator(dim, 0.3);
-	strategy1(maze, dim, 0.3);
+	char** maze  = mazeGenerator(dim, 0.30);
+	//BFS(maze, dim, 4, 7);
+	strategy2(maze, dim, 0.2);
+	//Astar(maze, dim, heap);
 /*	Node *linklist;
 	srand((int)time(NULL));
 	int all = dim * dim - 2;

@@ -1,11 +1,12 @@
-#ifndef Strategy1_H
-#define Strategy1_H
+#ifndef Strategy2_H
+#define Strategy2_H
 #include "global.h"
 #include "queue.h"
 #include "stack.h"
 #include "DFS.h"
 #include "flamingFire.h"
-int strategy1(char** maze, int dim, float q){
+
+int strategy2(char** maze, int dim, float q){
 	int a, b;
 	char **mazeFire = initial(dim + 2);
 	char **mazeCopy = initial(dim + 2);
@@ -16,10 +17,9 @@ int strategy1(char** maze, int dim, float q){
 		}
 	}
 	
-	//record which cell is flaming
 	Queue *qshort = NULL;
 	Node *linklist = NULL;
-	//randomly createa a fire and use * to represent
+
 	srand((int)time(NULL));
 	int all = dim * dim - 2;
 	int randomnum;
@@ -49,8 +49,7 @@ int strategy1(char** maze, int dim, float q){
 		}
 	}
 	if(reachable(maze, dim, linklist->x, linklist->y) == 0) return 3;
-	
-	//shortest path
+
 	qshort = BFS(maze, dim, 1, 1);
 	Stack *stack = NULL;
 	while(qshort != NULL){
@@ -60,15 +59,29 @@ int strategy1(char** maze, int dim, float q){
 
 	while(stack != NULL){
 		linklist = flaming(mazeFire, dim, linklist, q, mazeCopy);
-
 		if(mazeFire[stack->head->x][stack->head->y] == '*') return 0;
 		mazeCopy[stack->head->x][stack->head->y] = '2';
+		stack = popstack(stack);
+		Node *t = stack->head;
+		
+		while(t != NULL){
+			if(mazeFire[t->x][t->y] == '*'){
+				qshort = BFS(mazeFire, dim, stack->head->x, stack->head->y);
+				stack = NULL;
+				while(qshort != NULL){
+					stack = pushstack(stack, qshort->front->x, qshort->front->y);
+					qshort = pop(qshort);
+				}
+				break;
+			}
+			t = t->next;
+		}
 		printMaze(mazeCopy, dim);
 		sleep(1);
 		system("clear");
-		stack = popstack(stack);
+		
 	}
 	return 1;
-}
 
+}
 #endif
