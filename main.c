@@ -31,9 +31,49 @@ int main(){
 		total = 0;
 
 	}*/
-	char** maze  = mazeGenerator(500, 0);
-	Astar(maze, 500, heap);
+	int dim = 50;
+	char** maze  = mazeGenerator(dim, 0.3);
+	strategy1(maze, dim, 0.3);
+/*	Node *linklist;
+	srand((int)time(NULL));
+	int all = dim * dim - 2;
+	int randomnum, a, b;
+	while(1 == 1){
+		randomnum = rand() % all + 2;
+	    a = randomnum % dim;
+		b = randomnum / dim;
+		if(a == 0 && maze[b][dim] == '0'){
+			maze[b][dim] = '*';
+			Node *temp = (Node*)malloc(sizeof(Node));
+			temp->x = b;
+			temp->y = dim;
+			temp->next = NULL;
+			linklist = temp;
+			break;
+			printf("%d %d\n", b, dim);
+		}
+		else if(maze[b + 1][a] == '0'){
+			maze[b + 1][a] = '*';
+			Node *temp = (Node*)malloc(sizeof(Node));
+			temp->x = b + 1;
+			temp->y = a;
+			temp->next = NULL;
+			linklist = temp;
+			printf("%d %d\n", b+1, a);
+			break;
+		}
+	}
 
+	for(int i = 0; i < 100; i++){
+		linklist = flaming(maze, dim, linklist, 0.05);
+		printMaze(maze, dim);
+		sleep(1);
+		system("clear");
+	}*/
+
+	//Astar(maze, 500, heap);
+	//int a = strategy1(maze, 50, 0.5);
+	//printf("%d\n", a);
 /*	clock_t start, end, start1;
     start1 = clock();
 	char** maze = mazeGenerator(5000, 0.5);

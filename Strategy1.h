@@ -8,8 +8,12 @@
 int strategy1(char** maze, int dim, float q){
 	int a, b;
 	char **mazeFire = initial(dim + 2);
+	char **mazeCopy = initial(dim + 2);
 	for(int i = 0; i < dim + 2; i++){
-		for(int j = 0; j < dim + 2; j++) mazeFire[i][j] = maze[i][j];
+		for(int j = 0; j < dim + 2; j++){
+			mazeFire[i][j] = maze[i][j];
+			mazeCopy[i][j] = maze[i][j];
+		}
 	}
 	
 	//record which cell is flaming
@@ -25,6 +29,7 @@ int strategy1(char** maze, int dim, float q){
 		b = randomnum / dim;
 		if(a == 0 && maze[b][dim] == '0'){
 			mazeFire[b][dim] = '*';
+			mazeCopy[b][dim] = '*';
 			Node *temp = (Node*)malloc(sizeof(Node));
 			temp->x = b;
 			temp->y = dim;
@@ -34,6 +39,7 @@ int strategy1(char** maze, int dim, float q){
 		}
 		else if(maze[b + 1][a] == '0'){
 			mazeFire[b + 1][a] = '*';
+			mazeCopy[b + 1][a] = '*';
 			Node *temp = (Node*)malloc(sizeof(Node));
 			temp->x = b + 1;
 			temp->y = a;
@@ -53,8 +59,13 @@ int strategy1(char** maze, int dim, float q){
 	}
 
 	while(stack != NULL){
-		linklist = flaming(mazeFire, dim, linklist, q);
+		linklist = flaming(mazeFire, dim, linklist, q, mazeCopy);
+
 		if(mazeFire[stack->head->x][stack->head->y] == '*') return 0;
+		mazeCopy[stack->head->x][stack->head->y] = '2';
+		printMaze(mazeCopy, dim);
+		sleep(1);
+		system("clear");
 		stack = popstack(stack);
 	}
 	return 1;
