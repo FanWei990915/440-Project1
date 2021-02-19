@@ -7,7 +7,7 @@
 //a BFS algorithm to find the shortest path
 Queue* shortpath(char** maze, int dim, int x1, int y1){
 	if(maze[dim][dim] == '0'){
-		printf("No Solution for this Maze!\n");
+//		printf("No Solution for this Maze!\n");
 		return NULL;
 	}
 	int x, y;

@@ -29,7 +29,7 @@ void swap(pnode heap[], int a, int b){
 }
 
 //binary heap push
-void pushh(int x, int y, float total, int size, pnode heap[]){
+void pushh(int x, int y, float total, int size, pnode heap[], int dim){
 	heap[size].x = x;
 	heap[size].y = y;
 	heap[size].total = total;
@@ -41,7 +41,7 @@ void pushh(int x, int y, float total, int size, pnode heap[]){
 }
 
 //binary heap pop
-void poph(pnode heap[], int size){
+void poph(pnode heap[], int size, int dim){
 	heap[1].x = heap[size].x;
 	heap[1].y = heap[size].y;
 	heap[1].total = heap[size].total;
@@ -64,14 +64,14 @@ void poph(pnode heap[], int size){
 //heuristic function
 float distance(int dim, int x, int y){
 	float a = (1+(float)(1/(dim*2-x-y)))*sqrt((dim - x) * (dim - x) + (dim - y) * (dim - y));
-	//return a;
-	return (dim * 2 - x - y);
+	return a;
+	//return (dim * 2 - x - y);
 }
 
 void initialmc(int x, int y, int dis, da **maze, char prev, int size, pnode heap[], int dim){
 	maze[x][y].distance = dis;
 	maze[x][y].prev = prev;
-	pushh(x, y, distance(dim, x, y) + (float)dis, size, heap);
+	pushh(x, y, distance(dim, x, y) + (float)dis, size, heap, dim);
 }
 
 
@@ -144,7 +144,7 @@ void Astar(char** maze, int dim, pnode heap[]){
 			if(mazeCopy[x - 1][y].status == '3') break;
 		}
 		mazeCopy[x][y].status = '2';
-		poph(heap, size);
+		poph(heap, size, dim);
 		size--;
 	}
 	for(int i = 1; i <= dim; i++){

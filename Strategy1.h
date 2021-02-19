@@ -52,6 +52,7 @@ int strategy1(char** maze, int dim, float q){
 	
 	//shortest path
 	qshort = BFS(maze, dim, 1, 1);
+	if(qshort == NULL) return 3;
 	Stack *stack = NULL;
 	while(qshort != NULL){
 		stack = pushstack(stack, qshort->front->x, qshort->front->y);
@@ -63,12 +64,14 @@ int strategy1(char** maze, int dim, float q){
 
 		if(mazeFire[stack->head->x][stack->head->y] == '*') return 0;
 		mazeCopy[stack->head->x][stack->head->y] = '2';
-		printMaze(mazeCopy, dim);
-		sleep(1);
-		system("clear");
+		//printMaze(mazeCopy, dim);
+		//sleep(1);
+		//system("clear");
 		stack = popstack(stack);
 	}
+	//printMaze(mazeCopy, dim);
 	return 1;
+
 }
 
 #endif

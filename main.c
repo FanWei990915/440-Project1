@@ -34,9 +34,21 @@ int main(){
 	}*/
 	int dim = 50;
 	char** maze  = mazeGenerator(dim, 0.30);
+	
 	//BFS(maze, dim, 4, 7);
-	strategy2(maze, dim, 0.2);
-	//Astar(maze, dim, heap);
+	int total = 0, sum = 0;
+	while(total < 1000){
+		maze = mazeGenerator(dim, 0.30);
+		int a = strategy1(maze, dim, 0.30);
+		if(a != 3){
+			if(a == 1) sum++;
+			total++;
+		}
+	}
+	printf("%f\n", (float)sum/1000);
+	//printf("%d\n", a);
+
+//	Astar(maze, dim, heap);
 /*	Node *linklist;
 	srand((int)time(NULL));
 	int all = dim * dim - 2;
@@ -68,12 +80,13 @@ int main(){
 	}
 
 	for(int i = 0; i < 100; i++){
-		linklist = flaming(maze, dim, linklist, 0.05);
-		printMaze(maze, dim);
-		sleep(1);
-		system("clear");
-	}*/
-
+		linklist = flaming(maze, dim, linklist, 0.05, maze);
+		//printMaze(maze, dim);
+		//sleep(1);
+		//system("clear");
+	}
+	printMaze(maze, dim);*/
+	//printMaze(maze, dim);
 	//Astar(maze, 500, heap);
 	//int a = strategy1(maze, 50, 0.5);
 	//printf("%d\n", a);

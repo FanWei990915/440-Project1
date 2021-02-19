@@ -31,7 +31,7 @@ Node* flaming(char** maze, int dim, Node *linklist, float q, char** mazeC){
 	newFire->next = NULL;
 	Node *newFireCopy = newFire;
 
-	srand((int)time(NULL));
+	//srand((int)time(NULL));
 	while(temp->next != NULL){
 		 int around = 0;
 		 x = temp->next->x;

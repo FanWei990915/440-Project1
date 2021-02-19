@@ -51,6 +51,7 @@ int strategy2(char** maze, int dim, float q){
 	if(reachable(maze, dim, linklist->x, linklist->y) == 0) return 3;
 
 	qshort = BFS(maze, dim, 1, 1);
+	if(qshort == NULL) return 3;
 	Stack *stack = NULL;
 	while(qshort != NULL){
 		stack = pushstack(stack, qshort->front->x, qshort->front->y);
@@ -62,11 +63,13 @@ int strategy2(char** maze, int dim, float q){
 		if(mazeFire[stack->head->x][stack->head->y] == '*') return 0;
 		mazeCopy[stack->head->x][stack->head->y] = '2';
 		stack = popstack(stack);
+		if(stack == NULL) break;
 		Node *t = stack->head;
 		
 		while(t != NULL){
 			if(mazeFire[t->x][t->y] == '*'){
 				qshort = BFS(mazeFire, dim, stack->head->x, stack->head->y);
+				if(qshort == NULL) return 0;
 				stack = NULL;
 				while(qshort != NULL){
 					stack = pushstack(stack, qshort->front->x, qshort->front->y);
@@ -76,11 +79,12 @@ int strategy2(char** maze, int dim, float q){
 			}
 			t = t->next;
 		}
-		printMaze(mazeCopy, dim);
-		sleep(1);
-		system("clear");
+	//	printMaze(mazeCopy, dim);
+	//	sleep(1);
+	//	system("clear");
 		
 	}
+	printMaze(mazeCopy, dim);
 	return 1;
 
 }

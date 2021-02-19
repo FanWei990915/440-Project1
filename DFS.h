@@ -17,7 +17,7 @@ void printDFS(char** maze, Stack *stack, int dim){
 	}
 }
 
-void rreachable(char** maze, /*int Sx, int Sy,*/int dim, Stack *stack, int x, int y){
+void rreachable(char** maze, int dim, Stack *stack, int x, int y){
 	while(stack != NULL){
 		if(maze[x][y] != '0') break;
 		int Sx = stack->head->x;
