@@ -6,6 +6,7 @@
 #include"Astar.h"
 #include"Strategy1.h"
 #include"Strategy2.h"
+#include"Strategy3.h"
 pnode heap[100000000];
 int main(){
 /*	int dim; 
@@ -36,16 +37,9 @@ int main(){
 	char** maze  = mazeGenerator(dim, 0.30);
 	
 	//BFS(maze, dim, 4, 7);
-	int total = 0, sum = 0;
-	while(total < 1000){
-		maze = mazeGenerator(dim, 0.30);
-		int a = strategy1(maze, dim, 0.30);
-		if(a != 3){
-			if(a == 1) sum++;
-			total++;
-		}
-	}
-	printf("%f\n", (float)sum/1000);
+
+	int a = strategy3(maze, dim, 0.30);
+	
 	//printf("%d\n", a);
 
 //	Astar(maze, dim, heap);
