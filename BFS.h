@@ -15,6 +15,8 @@ Queue* shortpath(char** maze, int dim, int x1, int y1){
 	queue = push(queue,dim ,dim);
 	x = queue->back->x; 
 	y = queue->back->y;
+	
+	//track the path through previous
 	while(!(x == x1 && y == y1)){
 		if(maze[x][y] == 'z') y--;
 		else if(maze[x][y] == 's') x--;
@@ -43,6 +45,8 @@ void rBFS(char** maze, int dim, Queue* queue){
 	int n = queue->size;
 	for(int i = 0; i < n; i++){
 		int Sx = queue->front->x, Sy = queue->front->y;
+		
+		//push all the possible cell to the queue and record their previous
 		if(maze[Sx][Sy + 1] == '0' && maze[dim][dim] == '0'){
 			maze[Sx][Sy + 1] = 'z';//previous is left
 			queue = push(queue, Sx, Sy + 1);

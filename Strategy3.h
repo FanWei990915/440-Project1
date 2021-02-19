@@ -62,6 +62,8 @@ int strategy3(char** maze, int dim, float q){
 	int fireX = linklist->x;
 	int fireY = linklist->y;
 
+	/*for every point in the map, we calculate the Manhattan distance from it to the original fire.
+	and use formula as follow to change the distance to a penalty weight*/
 	for(int i = 1; i <= dim; i++){
 		for(int j = 1; j <= dim; j++){
 			mazePenalty[i][j] = dim * 2 - 2 - abs(fireX - i) - abs(fireY - j);			
@@ -73,6 +75,8 @@ int strategy3(char** maze, int dim, float q){
 	priority->y = 1;
 	priority->next = NULL;
 	maze[fireX][fireY] = '1';
+	
+	//Actually this algotithm is dijkstra, we use the penalty map as additonal information to search the shortest path
 	while(priority != NULL){	
 		int tempX = priority->x;
 		int tempY = priority->y;

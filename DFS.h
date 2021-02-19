@@ -22,6 +22,7 @@ void rreachable(char** maze, int dim, Stack *stack, int x, int y){
 		if(maze[x][y] != '0') break;
 		int Sx = stack->head->x;
 		int Sy = stack->head->y;
+		//if the cell is unvisited and we push it to the stack
 		if(maze[Sx][Sy + 1] == '0'){
 			stack = pushstack(stack, Sx, Sy + 1);
 			maze[Sx][Sy + 1] = '2';
@@ -38,7 +39,7 @@ void rreachable(char** maze, int dim, Stack *stack, int x, int y){
 			stack = pushstack(stack, Sx - 1, Sy);
 			maze[Sx - 1][Sy] = '2';
 		}
-		else stack = popstack(stack);
+		else stack = popstack(stack); //if this way is stuck, we pop it
 	}
 }
 int reachable(char** maze, int dim, int x, int y){
@@ -50,7 +51,7 @@ int reachable(char** maze, int dim, int x, int y){
 	}
 	mazeCopy[1][1] = '3';
 	rreachable(mazeCopy, dim, stack, x, y);
-	if(mazeCopy[x][y] == '0'){
+	if(mazeCopy[x][y] == '0'){ 
 		//printf("NO SOLUTION!\n");
 		return 0;
 	}

@@ -33,12 +33,12 @@ int main(){
 		total = 0;
 
 	}*/
-	int dim = 30;
-	char** maze  = mazeGenerator(dim, 0.20);
+//	int dim = 30;
+//	char** maze  = mazeGenerator(dim, 0.20);
 	
 	//BFS(maze, dim, 4, 7);
 
-	int a = strategy3(maze, dim, 0.10);
+//	int a = strategy3(maze, dim, 0.10);
 	
 	//printf("%d\n", a);
 
@@ -84,25 +84,28 @@ int main(){
 	//Astar(maze, 500, heap);
 	//int a = strategy1(maze, 50, 0.5);
 	//printf("%d\n", a);
-/*	clock_t start, end, start1;
+	char** maze = mazeGenerator(10000, 0.30);
+	clock_t start, end, start1;
     start1 = clock();
-	char** maze = mazeGenerator(5000, 0.5);
-   // BFS(maze, dim);
+	
+	int a = reachable(maze, 10000, 10000, 10000);
+	printf("%d\n", a);
+   // BFS(maze, dim);*/
 	start = clock();
 	printf("time: %f s\n", ((double)(start - start1)) / CLOCKS_PER_SEC);
-	reachable(maze, 5000);*/
+	
 
 	//optimization(maze, dim);
 	
-	//BFS(maze, dim);
+	//BFS(maze, 26000, 1, 1);
 	//freememory(maze, dim + 2);
 
-	//Astar(maze, dim, heap);
+	Astar(maze, 10000, heap);
 
 
 
- //   end = clock();
-   // printf("time: %f s\n", ((double)(end - start)) / CLOCKS_PER_SEC);
+    end = clock();
+    printf("time: %f s\n", ((double)(end - start)) / CLOCKS_PER_SEC);
 
    
     return 0;

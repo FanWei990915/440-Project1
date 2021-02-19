@@ -19,7 +19,7 @@ int strategy2(char** maze, int dim, float q){
 	
 	Queue *qshort = NULL;
 	Node *linklist = NULL;
-
+	//randomly createa a fire and use * to represent
 	srand((int)time(NULL));
 	int all = dim * dim - 2;
 	int randomnum;
@@ -48,6 +48,7 @@ int strategy2(char** maze, int dim, float q){
 			break;
 		}
 	}
+	//if we cannot meet the fire, we discard it
 	if(reachable(maze, dim, linklist->x, linklist->y) == 0) return 3;
 
 	qshort = BFS(maze, dim, 1, 1);
@@ -58,6 +59,7 @@ int strategy2(char** maze, int dim, float q){
 		qshort = pop(qshort);
 	}
 
+	
 	while(stack != NULL){
 		linklist = flaming(mazeFire, dim, linklist, q, mazeCopy);
 		if(mazeFire[stack->head->x][stack->head->y] == '*') return 0;
@@ -66,8 +68,12 @@ int strategy2(char** maze, int dim, float q){
 		if(stack == NULL) break;
 		Node *t = stack->head;
 		
+		/*if the new fire does not affect our original path, we do not need to search the shortest path again
+			because we will get same path as the original one.*/
 		while(t != NULL){
 			if(mazeFire[t->x][t->y] == '*'){
+				
+				//search the shortest path again
 				qshort = BFS(mazeFire, dim, stack->head->x, stack->head->y);
 				if(qshort == NULL) return 0;
 				stack = NULL;

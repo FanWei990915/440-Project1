@@ -48,6 +48,8 @@ int strategy1(char** maze, int dim, float q){
 			break;
 		}
 	}
+	
+	//if we cannot meet the fire, we discard it
 	if(reachable(maze, dim, linklist->x, linklist->y) == 0) return 3;
 	
 	//shortest path

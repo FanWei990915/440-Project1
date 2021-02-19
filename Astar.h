@@ -61,7 +61,7 @@ void poph(pnode heap[], int size, int dim){
 	}
 }
 
-//heuristic function
+//heuristic function(2 different formula)
 float distance(int dim, int x, int y){
 	float a = (1+(float)(1/(dim*2-x-y)))*sqrt((dim - x) * (dim - x) + (dim - y) * (dim - y));
 	return a;
@@ -100,15 +100,17 @@ void Astar(char** maze, int dim, pnode heap[]){
 		x = heap[1].x;
 		y = heap[1].y;
 		//if(mazeCopy[x][y].status == '3')break;
+		
+		//if new distance is less than past or the cell is totaly unvisited, we update new data to it. store them in piroity queue
 		if(mazeCopy[x][y].status == '0'){
 			tempdis = mazeCopy[x][y].distance;
 			//right
 			if(mazeCopy[x][y + 1].status == '0'){
 				if(mazeCopy[x][y + 1].prev == '0'){
-					initialmc(x, y + 1, tempdis + 1, mazeCopy, 'z', ++size, heap, dim);
+					initialmc(x, y + 1, tempdis + 1, mazeCopy, 'z', ++size, heap, dim);//update
 				}
 				else if(mazeCopy[x][y + 1].distance > (tempdis + 1)){
-					initialmc(x, y + 1, tempdis + 1, mazeCopy, 'z', ++size, heap, dim);
+					initialmc(x, y + 1, tempdis + 1, mazeCopy, 'z', ++size, heap, dim);//update
 				}
 			}
 			if(mazeCopy[x][y + 1].status == '3') break;
@@ -147,7 +149,27 @@ void Astar(char** maze, int dim, pnode heap[]){
 		poph(heap, size, dim);
 		size--;
 	}
-	for(int i = 1; i <= dim; i++){
+	
+	Node *solution = (Node*)malloc(sizeof(Node));
+	solution->x = dim;
+	solution->y = dim;
+	solution->next = NULL;
+	Node *p2 = solution;
+	int pathX = dim, pathY = dim;
+	while(!(pathX == 1 && pathY == 1)){
+		if(Prev[pathX][pathY] == 'z') pathY--;
+		else if(Prev[pathX][pathY] == 's') pathX--;
+		else if(Prev[pathX][pathY] == 'y') pathY++;
+		else if(Prev[pathX][pathY] == 'x') pathX++;
+		Node *tt = (Node*)malloc(sizeof(Node));
+		tt->x = pathX;
+		tt->y = pathY;
+		tt->next = NULL;
+		p2->next = tt;
+		p2 = p2->next;
+	}
+
+	/*for(int i = 1; i <= dim; i++){
 		for(int j = 1; j <= dim; j++){
 			if(mazeCopy[i][j].status == '1') printf("\033[01;34m1 \033[0m");
 			else if(mazeCopy[i][j].status == '2') printf("\033[01;32m2 \033[0m");
@@ -155,7 +177,7 @@ void Astar(char** maze, int dim, pnode heap[]){
 		}
 		printf("\n");
 	
-	}
+	}*/
 
 	
 
