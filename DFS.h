@@ -18,33 +18,6 @@ void printDFS(char** maze, Stack *stack, int dim){
 }
 
 void rreachable(char** maze, /*int Sx, int Sy,*/int dim, Stack *stack, int x, int y){
-
-//if recursion is too depp, it will cause stack overflow
-
-/*	if(Sx == dim && Sy == dim){
-		maze[dim][dim] = '3';
-		//printf("REACHABLE\n");
-		return;
-	}
-	if(maze[Sx][Sy + 1] == '0' && maze[dim][dim] != '3'){
-		maze[Sx][Sy + 1] = '2';
-		rreachable(maze, Sx, Sy + 1, dim);
-	}
-	if(maze[dim][dim] == '3') return;
-	if(maze[Sx + 1][Sy] == '0' && maze[dim][dim] != '3'){
-		maze[Sx + 1][Sy] = '2';
-		rreachable(maze, Sx + 1, Sy, dim);
-	}
-	if(maze[dim][dim] == '3') return;
-	if(maze[Sx][Sy - 1] == '0' && maze[dim][dim] != '3'){
-		maze[Sx][Sy - 1] = '2';
-		rreachable(maze, Sx, Sy - 1, dim);
-	}
-	if(maze[dim][dim] == '3') return;
-	if(maze[Sx - 1][Sy] == '0' && maze[dim][dim] != '3'){
-		maze[Sx - 1][Sy] = '2';
-		rreachable(maze, Sx - 1, Sy, dim);
-	}*/
 	while(stack != NULL){
 		if(maze[x][y] != '0') break;
 		int Sx = stack->head->x;
