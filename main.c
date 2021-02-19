@@ -84,12 +84,12 @@ int main(){
 	//Astar(maze, 500, heap);
 	//int a = strategy1(maze, 50, 0.5);
 	//printf("%d\n", a);
-	char** maze = mazeGenerator(10000, 0.30);
+	char** maze = mazeGenerator(50, 0.30);
 	clock_t start, end, start1;
     start1 = clock();
 	
-	int a = reachable(maze, 10000, 10000, 10000);
-	printf("%d\n", a);
+	//int a = reachable(maze, 10000, 10000, 10000);
+	//printf("%d\n", a);
    // BFS(maze, dim);*/
 	start = clock();
 	printf("time: %f s\n", ((double)(start - start1)) / CLOCKS_PER_SEC);
@@ -100,7 +100,7 @@ int main(){
 	//BFS(maze, 26000, 1, 1);
 	//freememory(maze, dim + 2);
 
-	Astar(maze, 10000, heap);
+	Astar(maze, 50, heap);
 
 
 
