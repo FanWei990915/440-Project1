@@ -16,7 +16,7 @@ int strategy3(char** maze, int dim, float q){
 	char **Prev =  initial(dim + 2);
 	for(int i = 0; i < dim + 2; i++){
 		Distance[i] = (int*)malloc((dim + 2) * sizeof(int));
-		for(int j = 0; j < dim + 2; i++) Distance[i][j] = 0;
+		for(int j = 0; j < dim + 2; j++) Distance[i][j] = 0;
 	}
 	for(int i = 0; i < dim + 2; i++){
 		for(int j = 0; j < dim + 2; j++){
@@ -67,12 +67,12 @@ int strategy3(char** maze, int dim, float q){
 			mazePenalty[i][j] = dim * 2 - 2 - abs(fireX - i) - abs(fireY - j);			
 		}
 	}
-    return 0;
+   	
 	Node* priority = (Node*)malloc(sizeof(Node));
 	priority->x = 1;
 	priority->y = 1;
 	priority->next = NULL;
-	
+	maze[fireX][fireY] = '1';
 	while(priority != NULL){	
 		int tempX = priority->x;
 		int tempY = priority->y;
@@ -81,8 +81,9 @@ int strategy3(char** maze, int dim, float q){
 			
 			if(maze[tempX][tempY + 1] == '0' && Visit[tempX][tempY + 1] == '0'){
 				int newDis = tempDistance + mazePenalty[tempX][tempY + 1];
-				if(newDis < Distance[tempX][tempY + 1]){
-					Prev[tempX][tempY + 1] = 's';
+				if(newDis < Distance[tempX][tempY + 1] || Prev[tempX][tempY + 1] == '0'){
+					Distance[tempX][tempY + 1] = newDis;
+					Prev[tempX][tempY + 1] = 'z';
 					Node *p1 = priority;
 					int flag = 0;
 					Node *insert = (Node*)malloc(sizeof(Node));
@@ -106,8 +107,9 @@ int strategy3(char** maze, int dim, float q){
 
 			if(maze[tempX][tempY - 1] == '0' && Visit[tempX][tempY - 1] == '0'){
 				int newDis = tempDistance + mazePenalty[tempX][tempY - 1];
-				if(newDis < Distance[tempX][tempY - 1]){
-					Prev[tempX][tempY - 1] = 'x';
+				if(newDis < Distance[tempX][tempY - 1] || Prev[tempX][tempY - 1] == '0'){
+					Distance[tempX][tempY - 1] = newDis;
+					Prev[tempX][tempY - 1] = 'y';
 					Node *p1 = priority;
 					int flag = 0;
 					Node *insert = (Node*)malloc(sizeof(Node));
@@ -131,8 +133,9 @@ int strategy3(char** maze, int dim, float q){
 
 			if(maze[tempX + 1][tempY] == '0' && Visit[tempX + 1][tempY] == '0'){
 				int newDis = tempDistance + mazePenalty[tempX + 1][tempY];
-				if(newDis < Distance[tempX + 1][tempY]){
-					Prev[tempX + 1][tempY] = 'z';
+				if(newDis < Distance[tempX + 1][tempY] || Prev[tempX + 1][tempY] == '0'){
+					Distance[tempX + 1][tempY] = newDis;
+					Prev[tempX + 1][tempY] = 's';
 					Node *p1 = priority;
 					int flag = 0;
 					Node *insert = (Node*)malloc(sizeof(Node));
@@ -156,8 +159,9 @@ int strategy3(char** maze, int dim, float q){
 
 			if(maze[tempX - 1][tempY] == '0' && Visit[tempX - 1][tempY] == '0'){
 				int newDis = tempDistance + mazePenalty[tempX - 1][tempY];
-				if(newDis < Distance[tempX - 1][tempY]){
-					Prev[tempX - 1][tempY] = 'y';
+				if(newDis < Distance[tempX - 1][tempY] || Prev[tempX - 1][tempY]){
+					Distance[tempX - 1][tempY] = newDis;
+					Prev[tempX - 1][tempY] = 'x';
 					Node *p1 = priority;
 					int flag = 0;
 					Node *insert = (Node*)malloc(sizeof(Node));

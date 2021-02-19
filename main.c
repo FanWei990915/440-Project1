@@ -33,12 +33,12 @@ int main(){
 		total = 0;
 
 	}*/
-	int dim = 50;
-	char** maze  = mazeGenerator(dim, 0.30);
+	int dim = 30;
+	char** maze  = mazeGenerator(dim, 0.20);
 	
 	//BFS(maze, dim, 4, 7);
 
-	int a = strategy3(maze, dim, 0.30);
+	int a = strategy3(maze, dim, 0.10);
 	
 	//printf("%d\n", a);
 

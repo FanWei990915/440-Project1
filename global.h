@@ -70,7 +70,7 @@ void printMaze(char** maze, int dim){
 		for(int j = 0; j < dim + 2; j++){
 			if(maze[i][j] == '1') printf("\033[01;34m 1\033[0m");
 			else if(maze[i][j] == '2') printf("\033[01;31m 2\033[0m");
-			else if(maze[i][j] >= '3') printf("\033[01;32m 3\033[0m");
+			else if(maze[i][j] == '3') printf("\033[01;32m 3\033[0m");
 			else if(maze[i][j] == '*') printf("\033[01;30m *\033[0m");
 			else printf(" %c", maze[i][j]);
 		}
