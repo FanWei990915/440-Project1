@@ -75,7 +75,7 @@ void initialmc(int x, int y, int dis, da **maze, char prev, int size, pnode heap
 }
 
 
-void Astar(char** maze, int dim, pnode heap[]){
+Node* Astar(char** maze, int dim, pnode heap[]){
 	int x, y, tempdis, size = 1;
 	heap[1].x = 1;
 	heap[1].y = 1;
@@ -157,7 +157,7 @@ void Astar(char** maze, int dim, pnode heap[]){
 	}
 	if(mazeCopy[dim][dim - 1].prev != '0') mazeCopy[dim][dim].prev = 'z';
 	else if(mazeCopy[dim - 1][dim].prev != '0') mazeCopy[dim][dim].prev = 's';
-	else return;
+	else return NULL;
 	//record the path
 	Node *solution = (Node*)malloc(sizeof(Node));
 	solution->x = dim;
@@ -177,7 +177,7 @@ void Astar(char** maze, int dim, pnode heap[]){
 		p2->next = tt;
 		p2 = p2->next;
 	}
-
+	return solution;
 	/*for(int i = 1; i <= dim; i++){
 		for(int j = 1; j <= dim; j++){
 			if(mazeCopy[i][j].status == '1') printf("\033[01;34m1 \033[0m");
@@ -197,7 +197,7 @@ void Astar(char** maze, int dim, pnode heap[]){
 		}
 		printf("\n");
 	
-	}*./
+	}*/
 
 	
 
